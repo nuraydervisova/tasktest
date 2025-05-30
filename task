@@ -1,0 +1,46 @@
+a = "alma"
+b = "armud"
+c = "nar"
+siyahi = []
+siyahi.append(a)
+siyahi.append(b)
+siyahi.append(c)
+print(f"{a}, {b}, {c}")
+
+def add_product(x,b):
+    if b is None:
+        print("ekrana hecne daxil edilmeyib")
+        return
+    
+    x.append(b)
+    print("Mehsul elave olundu")
+
+
+
+print(siyahi)
+add_product(siyahi,"salam")
+
+print(f"{a}, {b}, {c}")
+
+def remove_product(a):
+    if a is None or len(a) == 0:
+        print("siyahi bosdur , silmek mumkun deyil")
+        return
+    a.pop()
+    print("son mehsul silindi")
+         
+         
+remove_product(siyahi)
+print(f"{a}, {b}, {c}")
+def product():
+    a = input("mehsul daxil edin")
+    if a is None or len(a) == 0:
+        print("mehsul daxil edilmedi")
+    else:
+        siyahi.append(a)
+        print(f"{a}, {b}, {c}")
+
+    print("istifadeci mehsulu elave etti")
+
+product()
+print(f"{a}, {b}, {c}")
