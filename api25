@@ -1,0 +1,50 @@
+from flask import Flask, request, render_template_string
+
+app = Flask(__name__)
+
+html_form = '''
+    <form method="POST">
+        Ədəd: <input type="number" step="any" name="num" value="{{num}}" /><br><br>
+        Əməliyyat:
+        <select name="operation">
+            <option value="square" {% if operation == 'square' %}selected{% endif %}>Kvadrat</option>
+            <option value="cube" {% if operation == 'cube' %}selected{% endif %}>Kub</option>
+        </select><br><br>
+        <input type="submit" value="Hesabla" />
+    </form>
+'''
+
+@app.route('/', methods=['GET', 'POST'])
+def calculate_power():
+    result = ''
+    num = ''
+    operation = 'square'
+
+    if request.method == 'POST':
+        num = request.form.get('num', '')
+        operation = request.form.get('operation', 'square')
+
+        if not num:
+            result = 'Zəhmət olmasa ədəd daxil edin.'
+        else:
+            try:
+                n = float(num)
+                if operation == 'square':
+                    cavab = n ** 2
+                    result = f'Nəticə: {cavab}'
+                elif operation == 'cube':
+                    cavab = n ** 3
+                    result = f'Nəticə: {cavab}'
+                else:
+                    result = 'Qeyri-müəyyən əməliyyat seçildi.'
+            except ValueError:
+                result = 'Zəhmət olmasa düzgün ədəd daxil edin.'
+
+    return render_template_string('''
+        <h2>Kvadrat və Kub Kalkulyatoru</h2>
+        ''' + html_form + '''
+        <p><b>{{ result }}</b></p>
+    ''', num=num, operation=operation, result=result)
+
+if __name__ == '__main__':
+    app.run(debug=True)
